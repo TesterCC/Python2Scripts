@@ -1,0 +1,8 @@
+static function OnWebSocketMessage(oMsg: WebSocketMessage){
+	//Log Message to the LOG tab
+	if(oMsg.IsOutbound) //上行
+	{
+	//	FiddlerApplication.Log.LogString(oMsg.PayloadAsString());
+	//	oMsg.SetPayload(oMsg.PayloadAsString().Replace("淅沥的假发","ccssss"))
+	}
+}

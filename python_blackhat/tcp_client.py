@@ -6,6 +6,7 @@
 
 import socket
 
+# please first launch tcp_server.py
 target_host = "127.0.0.1"    # "www.baidu.com"
 target_port = 9999           # 80
 

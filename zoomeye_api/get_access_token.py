@@ -16,8 +16,8 @@ def login():
     # 如果不想手动输入，可以改造为直接传递，这样其实实现更简单
     # user = raw_input('[-] input : username :')
     # passwd = raw_input('[-] input : password :')
-    user = 'testerlyx@foxmail.com'
-    passwd = '-TesterCC07-'
+    user = 't...x@foxmail.com'
+    passwd = '-T...7-'  #  need change to right
     data = {
         'username': user,
         'password': passwd

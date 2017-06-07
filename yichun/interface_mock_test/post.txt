@@ -1,0 +1,2 @@
+INSERT INTO new_posts VALUES('this is my first post','first post');
+INSERT INTO new_posts VALUES('this is second','中文是不是可以');
