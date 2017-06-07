@@ -1,0 +1,2 @@
+test r+ite
+print 'a mode write test'.
