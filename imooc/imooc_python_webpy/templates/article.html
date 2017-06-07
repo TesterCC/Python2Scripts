@@ -1,0 +1,14 @@
+$def with(r)
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>article</title>
+</head>
+<body>
+    <h1>Article List</h1>
+    <ul>
+        $for l in r:
+        <li>$l.get('title') => $l.get('name') ->  $l.get('content')</li>
+    </ul>
+</body>
+</html>

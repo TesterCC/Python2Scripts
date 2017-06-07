@@ -1,7 +1,9 @@
-# coding:utf-8
-# !/usr/bin/env python
+#!/usr/bin/env python
+#coding=utf-8
 
-# Testing Python pdf P21
+'''
+Testing Python.pdf - P21
+'''
 
 
 class Calculate(object):
