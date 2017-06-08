@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 #coding:utf-8
 
+# 简明python教程 Python2版  A byte of python -- Python2
+
 def func(a,b=5,c=10):
     print 'a is',a, 'and b is',b, 'and c is',c
 

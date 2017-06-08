@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #coding:utf-8
 
+# 简明python教程 Python2版  A byte of python -- Python2
 
 import sys
 
