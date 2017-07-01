@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding=utf-8
-# 使用multiprocessing方式实现多进程 
+# 使用multiprocessing方式实现多进程  P17
 
 import os
 
@@ -17,3 +17,5 @@ if __name__ == '__main__':
         p = Process(target=run_proc, args=(str(i),))
         print "Process will start."
         p.start()
+    p.join()
+    print "Process end."

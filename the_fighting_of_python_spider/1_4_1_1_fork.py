@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding=utf-8
-# 使用fork方式实现多进程
+# 使用fork方式实现多进程 P17
 
 import os
 
