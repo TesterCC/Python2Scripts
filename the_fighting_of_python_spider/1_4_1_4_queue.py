@@ -26,3 +26,18 @@ if __name__ == '__main__':
     q = Queue()
     proc_write1 = Process(target=proc_write, args=(q, ['url_1', 'url_2', 'url_3']))
     proc_write2 = Process(target=proc_write, args=(q, ['url_4', 'url_5', 'url_6']))
+    proc_reader = Process(target=proc_read, args=(q,))
+
+    # 启动子进程proc_writer,写入
+    proc_write1.start()
+    proc_write2.start()
+
+    # 启动子进程proc_reader，读取
+    proc_reader.start()
+
+    # 等待proc_writer结束
+    proc_write1.join()
+    proc_write2.join()
+
+    # proc_reader进程里时死循环，无法等待其结果只能强行终止
+    proc_reader.terminate()
