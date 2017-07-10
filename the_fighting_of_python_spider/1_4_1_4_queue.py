@@ -14,6 +14,7 @@ def proc_write(q, urls):
         print('Put %s to queue ...' % url)
         time.sleep(random.random())
 
+
 # 读数据进程执行的代码
 def proc_read(q):
     print("Process(%s) is reading ... " % os.getpid())
