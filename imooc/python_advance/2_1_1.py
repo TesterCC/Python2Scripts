@@ -20,7 +20,7 @@ start = time.clock()
 r1 = filter(lambda x: x >= 0, data)
 end = time.clock()
 print "R1 run time: %f" % (end-start)
-print(r1)
+print(r1)     # in python3, filter() return need user list() to display
 
 
 # Method 2 -- 使用列表解析，过滤掉负数 -- quicker -- 更快，故首选列表解析
@@ -29,7 +29,7 @@ r2 = [x1 for x1 in data if x1 >= 0]
 end = time.clock()
 print "R2 run time: %f" % (end-start)
 print(r2)
-
+print "--------------------------------"
 
 # Method 1 and Method 2 is quicker than 2_1_0.py
 
@@ -40,3 +40,11 @@ print(r2)
 #     end = time.clock()
 #     print "Function run time: %f s." % (end - start)
 # count_runtime(r2)
+
+
+# Method 4 -- 筛出集合{77,89,32,20...}中能被3整除的元素   集合Set
+s = set(data)
+print(s)
+result = {x for x in s if x % 3 == 0}
+print(result)
+
