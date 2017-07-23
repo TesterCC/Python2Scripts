@@ -20,7 +20,7 @@ start = time.clock()
 r1 = filter(lambda x: x >= 0, data)
 end = time.clock()
 print "R1 run time: %f" % (end-start)
-print(r1)     # in python3, filter() return need user list() to display
+print(r1)
 
 
 # Method 2 -- 使用列表解析，过滤掉负数 -- quicker -- 更快，故首选列表解析
