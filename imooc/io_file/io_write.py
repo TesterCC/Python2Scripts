@@ -15,7 +15,7 @@ g.write("test write")
 g.close()
 
 
-h = open("hello.txt", 'a')   # add at end , not cler
+h = open("hello.txt", 'a')   # add at end , not clear
 h.write("print 'write test'!\n")
 h.close()
 
