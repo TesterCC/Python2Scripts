@@ -6,3 +6,7 @@ pwd = abc
 python_base = 15
 python_junior = 20
 linux_base = 15
+
+[login]
+20150511 = 20
+
