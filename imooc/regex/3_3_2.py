@@ -29,7 +29,10 @@ print(m2.group())
 m4 = re.match(r'[1-9]?\d$|100', '100')
 print(m4.group())
 
+print("---------------------------")
+
 m5 = re.match(r'[\w]{4,6}@163.com', 'immoc@163.com')
 print(m5.group())
 
-# 3-3 07:29
+m6 = re.match(r'[\w]{4,6}@(163|126).com', 'immoc@126.com')
+print(m6.group())
