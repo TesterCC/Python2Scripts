@@ -35,7 +35,7 @@ for url in set(list_url):
         req = urllib2.urlopen(url)
         buf = req.read()
         f.write(buf)
-        print("Finish downlaod picture: " + str(i+1))    # for debug, can comment
+        print("Finish download picture: " + str(i+1))    # for debug, can comment
         i += 1
     except Exception, e:
         print(e.message)
