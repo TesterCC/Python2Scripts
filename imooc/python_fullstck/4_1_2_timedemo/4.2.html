@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>实时报时v2</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="./4.2.css">
+	<script src="./4.2.js"></script>
+</head>
+
+<body>
+    <div id="container">
+		<button onclick="start_time()" id="start">开始</button>
+		<p id="prefix">当前时间：</p>
+		<p id='time'></p>
+	</div>
+</body>
+
+<script type="text/javascript">
+	document.getElementById('time').textContent = (new Date()).toISOString();
+
+	var refresh_id = 0;
+	function start_time() {
+	    var button = document.getElementById('start');
+	    if (button.textContent == "开始"){
+	        refresh_id = setInterval('refresh_time()', 1);
+	        button.textContent = "停止";
+		}else{
+	        button.textContent = "开始";
+	        clearInterval(refresh_id)
+		}
+
+    }
+</script>
+
+</html>
