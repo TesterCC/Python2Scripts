@@ -98,11 +98,22 @@ def clear():
 
 
 def tipMainMenuInputError():
-    pass
+    '''错误提示'''
+    clear()
+    print(u"只能输入0-7的整数，等待%d秒后重新输入" % timeout)
+    time.sleep(time.out)
 
 
 def getRawList():
-    pass
+    '''获取原始数据列表'''
+    clear()
+    global denyList
+    global rawList
+    print(u"输入回车后直接退出")
+    print(u"当前原始密码列表为: %s" % rawList)
+    st = None
+    # while not st == '':
+    # P55-56
 
 def addDenyList():
     pass
