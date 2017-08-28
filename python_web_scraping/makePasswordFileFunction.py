@@ -91,7 +91,7 @@ def mainMenu():
 def clear():
     '''清屏函数'''
     os = platform.system()
-    if (os == u"Windows"):
+    if os == u"Windows":
         os.system('cls')
     else:
         os.system('clear')
@@ -112,25 +112,140 @@ def getRawList():
     print(u"输入回车后直接退出")
     print(u"当前原始密码列表为: %s" % rawList)
     st = None
-    # while not st == '':
-    # P55-56
+    while not st == '':
+        st = raw_input("请输入密码元素字符串：")
+        if st in denyList:
+            print(u"这个字符串是预先设定的非法字符串")
+            continue
+        else:
+            rawList.append(st)
+            clear()
+            print(u"输入回车后直接退出")
+            print(u"当前原始密码列表为：%s" % rawList)
+
 
 def addDenyList():
-    pass
+    '''添加非法词'''
+    clear()
+    global denyList
+    print(u"输入回车后直接退出")
+    print(u"当前非法字符为：%s" % denyList)
+    st = None
+    while not st == '':
+        st = raw_input(u"请输入需要添加的非法字符串：")
+        denyList.append(st)
+        clear()
+        print(u"输入回车后直接退出")
+        print(u"当前非法字符列表为：%s" % denyList)
+
 
 def clearRawList():
-    pass
+    '''清空原始数据库列表'''
+    global rawList
+    rawList = []
+
 
 def setRawList():
-    pass
+    '''整理原始数据列表'''
+    global rawList
+    global denyList
+    a = set(rawList)
+    b = set(denyList)
+    rawList = []
+    for str in set(a - b):
+        rawList.append(str)
+
+
 def modifyPasswordLen():
-    pass
+    '''修改默认密码的长度'''
+    clear()
+    global maxLen
+    global minLen
+    while True:
+        print(u"当前密码长度为%d-%d" % (minLen, maxLen))
+        min = raw_input(u"请输入密码最小长度:")
+        max = raw_input(u"请输入密码最大长度:")
+        try:
+            minLen = int(min)
+            maxLen = int(max)
+        except ValueError:
+            print(u"密码长度只能输入数字[6-18]")
+            break
+        if minLen not in xrange(6,19) or maxLen not in xrange(6,19):
+            print(u"密码长度只能输入数字[6-18]")
+            minLen = 6
+            maxLen = 16
+            continue
+        if minLen == maxLen:
+            res = raw_input(u"请确定将密码长度设定为%d吗?(Yy/Nn)" % minLen)
+            if res not in list('YyNn'):
+                print(u"输入错误，请重新输入")
+                continue
+            elif res in list('Yy'):
+                print(u"好吧，你确定就好")
+                break
+            else:
+                print(u"给个机会，改一下吧")
+                continue
+        elif minLen > maxLen:
+            print(u"最小长度比最大长度还大，可能吗？请重新输入")
+            minLen = 6
+            maxLen = 16
+            continue
+        else:
+            print(u"设置完毕，等待％d秒后回主菜单" % timeout)
+            time.sleep(timeout)
+            break
+
 
 def createPasswordList():
-    pass
+    '''创建密码列表'''
+    global rawList
+    global pwList
+    global maxLen
+    global minLen
+    titleList = []
+    swapcaseList = []
+    for st in rawList:
+        swapcaseList.append(st.swapcase())     # swapCase()对字符串的大小写字母进行转换，大转小，小转大
+        titleList.append(st.title())    # 所有单词都是以大写开始，其余字母均为小写
+    sub1 = []
+    sub2 = []
+    for st in set(rawList + titleList + swapcaseList):
+        sub1.append(st)
+    for i in xrange(2, len(sub1) + 1):
+        sub2 += list(itertools.permutations(sub1, i))   # 实现排列组合
+    for tup in sub2:
+        PW = ''
+        for subPW in tup:
+            PW += subPW
+        if len(PW) in xrange(minLen, maxLen + 1):
+            pwList.append(PW)
+        else:
+            pass
+
 
 def showPassword():
+    '''显示创建的密码'''
+    global pwList
+    global timeout
+    for i in xrange(len(pwList)):
+        if i % 4 == 0:
+            print("%s\n" % pwList[i])
+        else:
+            print("%s\n" % pwList[i]),
+    print('\n')
+    print(u"显示%d秒，回到主菜单" % timeout)
+    time.sleep(timeout)
+
+
+def createPasswordFile():
+    '''创建密码字典文件'''
+    global flag
+    global pwList
     pass
+
+
 
 def createPasswordfile():
     pass
