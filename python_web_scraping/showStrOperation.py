@@ -8,6 +8,5 @@ P26-27
 '''
 
 
-# s = "ddd234"
-# print s.title()
-# print s.capitalize()   # 首字母大写
+
+
