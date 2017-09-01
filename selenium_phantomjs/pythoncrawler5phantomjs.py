@@ -7,13 +7,13 @@
 # python爬虫的最佳实践(五)--selenium+PhantomJS的简单使用
 
 
-
 import unittest
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
 
 class seleniumTest(unittest.TestCase):
+
     def setUp(self):
         self.driver = webdriver.PhantomJS()    # config phantomJS driver, PhantomJS，这是一个基于webkit的没有界面的浏览器
 
