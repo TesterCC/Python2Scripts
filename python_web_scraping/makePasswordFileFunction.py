@@ -9,6 +9,7 @@ P53-58
 
 编写一个简单的程序makePasswordFileFunction.py,创建一个有针对性的专用密码字典。
 
+根据用户输入的密码元素来创建一个字典列表
 '''
 
 import os
@@ -42,7 +43,7 @@ def main():
         '5': modifyPasswordLen,
         '6': createPasswordList,    # 创建最终的字典列表
         '7': showPassword,
-        '8': createPasswordfile
+        '8': createPasswordFile
     }
 
     while True:
@@ -90,8 +91,8 @@ def mainMenu():
 
 def clear():
     '''清屏函数'''
-    os = platform.system()
-    if os == u"Windows":
+    OS = platform.system()
+    if OS == u"Windows":
         os.system('cls')
     else:
         os.system('clear')
@@ -243,9 +244,14 @@ def createPasswordFile():
     '''创建密码字典文件'''
     global flag
     global pwList
-    pass
+    print(u"当前目录下创建字典文件：dic.txt")
+    time.sleep(timeout)
+    with open('./dic.txt', 'w+') as fp:
+        for PW in pwList:
+            fp.write(PW)
+            fp.write("\n")
+    flag = 1
 
 
-
-def createPasswordfile():
-    pass
+if __name__ == '__main__':
+    main()
