@@ -19,7 +19,7 @@ def detailOper(url):
 
    # prices1 = soup.select('div.list > ul > li > div > p.priType-s > span > i')
    prices = soup.select('div.list-wrap js-post > ul > li > a > div.t-price > p')
-   # 定位有问题，没住区到数据
+   # 定位有问题，无法获取到数据
    for title, price in zip(titles, prices):
        data = {
            'title': title.get_text(),

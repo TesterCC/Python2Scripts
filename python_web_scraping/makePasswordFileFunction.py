@@ -75,7 +75,6 @@ def mainMenu():
     print(u"|| 6: 创建密码列表")
     print(u"|| 7: 显示所有密码")
     print(u"|| 8: 创建字典文件")
-    print(u"||")
     print(u"||"),
     print(u"=" * 40),
     print(u"||")
