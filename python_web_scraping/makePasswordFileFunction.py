@@ -100,8 +100,8 @@ def clear():
 def tipMainMenuInputError():
     '''错误提示'''
     clear()
-    print(u"只能输入0-7的整数，等待%d秒后重新输入" % timeout)
-    time.sleep(time.out)
+    print(u"只能输入0-8的整数，等待%s秒后重新输入" % timeout)
+    time.sleep(timeout)
 
 
 def getRawList():
@@ -193,10 +193,9 @@ def modifyPasswordLen():
             maxLen = 16
             continue
         else:
-            print(u"设置完毕，等待％d秒后回主菜单" % timeout)
+            print(u"设置完毕，等待%d秒后回主菜单" % timeout)
             time.sleep(timeout)
             break
-
 
 def createPasswordList():
     '''创建密码列表'''

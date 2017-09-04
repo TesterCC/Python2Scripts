@@ -23,7 +23,7 @@ class MakePassword(object):
     def __init__(self):
         self.rawList = []
         self.denyList = ['', ' ', '@']
-        self.pwdList = []
+        self.pwList = []
         self.minLen = 6
         self.maxLen = 16
         self.timeout = 3
@@ -34,10 +34,10 @@ class MakePassword(object):
             '2': self.addDenyList,
             '3': self.clearRawList,
             '4': self.setRawList,
-            '5': self.modifyPasswordList,
+            '5': self.modifyPasswordLen,
             '6': self.createPasswordList,
             '7': self.showPassword,
-            '8': self.createPassowrdFile
+            '8': self.createPasswordFile
         }
         self.main()
 
@@ -90,8 +90,8 @@ class MakePassword(object):
     def tipMainMenuInputError(self):
         '''错误提示'''
         self.clear()
-        print(u"只能输入0-7的整数，等待%d秒后重新输入" % timeout)
-        time.sleep(time.out)
+        print(u"只能输入0-8的整数，等待%d秒后重新输入" % self.timeout)
+        time.sleep(self.timeout)
 
     def getRawList(self):
         '''获取原始数据列表'''
@@ -132,8 +132,8 @@ class MakePassword(object):
         a = set(self.rawList)
         b = set(self.denyList)
         self.rawList = []
-        for str in set(a - b):
-            self.rawList.append(str)
+        for strs in set(a - b):
+            self.rawList.append(strs)
 
     def modifyPasswordLen(self):
         '''修改默认密码的长度'''
@@ -171,7 +171,7 @@ class MakePassword(object):
                 self.maxLen = 16
                 continue
             else:
-                print(u"设置完毕，等待％d秒后回主菜单" % self.timeout)
+                print(u"设置完毕，等待%d秒后回主菜单" % self.timeout)
                 time.sleep(self.timeout)
                 break
 
@@ -205,7 +205,7 @@ class MakePassword(object):
             else:
                 print("%s\n" % self.pwList[i]),
         print('\n')
-        print(u"显示%d秒，回到主菜单" % self.timeout)
+        print(u"显示%s秒，回到主菜单" % self.timeout)
         time.sleep(self.timeout)
 
     def createPasswordFile(self):
@@ -221,5 +221,3 @@ class MakePassword(object):
 
 if __name__ == '__main__':
     mp = MakePassword()
-
-    # 有bug，无法正常生成字典文件
