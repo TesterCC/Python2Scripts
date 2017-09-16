@@ -17,7 +17,7 @@ def login():
     # user = raw_input('[-] input : username :')
     # passwd = raw_input('[-] input : password :')
     user = 't...x@foxmail.com'
-    passwd = '-T...7-'  #  need change to right
+    passwd = '-T..'  #  need change to right
     data = {
         'username': user,
         'password': passwd
