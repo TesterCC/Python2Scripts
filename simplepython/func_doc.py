@@ -18,5 +18,5 @@ def printMax(x,y):
         print y,'is maximum.'
 
 
-printMax(3,5)
+printMax(3, 5)
 print printMax.__doc__
