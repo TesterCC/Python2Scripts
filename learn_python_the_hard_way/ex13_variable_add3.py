@@ -11,7 +11,7 @@
 
 from sys import argv
 
-script, first, second, third = raw_input("Please input 4-alpha word: \n")
+script, first, second, third = raw_input("Please input 4 word and split with a space: \n").split(' ')
 
 print "The script is called:", script
 print "Your first variable is:", first
