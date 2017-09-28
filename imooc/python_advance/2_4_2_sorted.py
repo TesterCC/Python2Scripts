@@ -11,7 +11,7 @@ http://coding.imooc.com/lesson/62.html#mid=824
 
 解决方案：
 使用内置函数sorted
-1.利用zip将字典数据转化为元组   利用元组index 0来排序
+2.传递sorted参数的key参数
 '''
 
 from random import randint
@@ -19,17 +19,11 @@ from random import randint
 
 # create score dict
 d = {x: randint(60, 100) for x in "xyzabc"}
-print(d)
+print(d) 
 
 print("------------------------")
 print(sorted(d))
+print(d.items())    # key, value
 
-print(d.keys())    # keys
-print(d.values())   # values
-
-print('------------zip-----------')
-print(zip(d.values(), d.keys()))      # score in index 0
-print(zip(d.itervalues(), d.iterkeys()))      # save more space
-
-print('------------sorted zip-----------')
-print(sorted(zip(d.itervalues(), d.iterkeys())))
+print('------------sorted-----------')
+print(sorted(d.items(), key=lambda x: x[1]))   # x[0]是xyzabc的位置，x[1]是分数
