@@ -8,7 +8,7 @@
 Python爬虫开发与项目实战
 1.4.4 分布式进程
 Linux/Windows任务进程
-P29-30
+P29-30     can run in windows XP + python 2.7.14
 '''
 
 import time
