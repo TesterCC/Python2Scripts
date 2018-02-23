@@ -52,20 +52,26 @@ def test_baidu_search(browser, url):
 
 
 if __name__ == '__main__':
-# 浏览器和首页url,可以参数化这个部分
-     data = {
-        "chrome": "http://www.baidu.com",
-        "firefox": "http://www.baidu.com"    # firefox因为和Selenium2的兼容性问题，可以启动但无法输入
-        # "ie": "http://www.baidu.com",
+
+    # 浏览器和首页url,可以参数化这个部分
+    data = {
+    "chrome": "http://www.baidu.com",
+    "firefox": "http://www.baidu.com"    # firefox因为和Selenium2的兼容性问题，可以启动但无法输入
+    # "ie": "http://www.baidu.com",
     }
 
-# 构建线程
-threads = []
-for b, url in data.items():
-    t = Thread(target=test_baidu_search, args=(b, url))
-    threads.append(t)
+    # 构建线程
+    threads = []
+    for b, url in data.items():
+        t = Thread(target=test_baidu_search, args=(b, url))
+        threads.append(t)
 
-# 启动所有线程
-for thr in threads:
-    thr.start()
+    # 启动所有线程
+    for thr in threads:
+        thr.start()
+
+    """
+    Need run in terminal:
+    python launch_multi_browser.py 
+    """
 

@@ -14,9 +14,11 @@ Python显示目录的树形结构
 
 import os
 
+
 def fileCntIn(currPath):
     '''汇总当前目录下文件数'''
     return sum([len(files) for root, dirs, files in os.walk(currPath)])
+
 
 def dirsTree(startPath):
     '''树形打印出目录结构'''
@@ -36,6 +38,7 @@ def dirsTree(startPath):
         # print '%s%s fileCount:%s' % (indent, os.path.split(root)[1], fileCount)
         print '%s%s' % (indent, os.path.split(root)[1])
 
+
 if __name__ == '__main__':
-    path = u"/Users/TesterCC/Development/"
+    path = u"/Users/TesterCC/Development/python_workspace/Python_Network"
     dirsTree(path)

@@ -16,6 +16,7 @@ def check_voter(name):
         voted[name] = True
         print("Let it vote.")
 
+
 if __name__ == '__main__':
     check_voter("Tom")
     check_voter("Jim")
