@@ -55,13 +55,104 @@ def main():
         useage()
 
     # get command -var
-    # try:
-        # opts, args = getopt.getopt(sys.argv[1:], "hel:t:p:cu:", [])
-    pass    #P15
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "hel:t:p:cu:", ["help", "listen", "execute", "target", "port", "command", "upload"])
+    except getopt.GetoptError as err:
+        print(str(err))
+        useage()
+
+    for o, a in opts:
+        if o in ("-h", "--help"):
+            useage()
+        elif o in ("-l", "--listen"):
+            listen = True
+        elif o in ("-e", "--execute"):
+            execute = a
+        elif o in ("-c", "--commandshell"):
+            command = True
+        elif o in ("-u", "--upload"):
+            upload_destination = a
+        elif o in ("-t", "--target"):
+            target = a
+        elif o in ("-p", "--port"):
+            port = int(a)
+        else:
+            assert False, "Unhandled Option"
+
+    # 是进行监听还是仅从标准输入发送数据？
+    if not listen and len(target) and port > 0:
+
+        # 从命令行读取内存数据
+        # 这里将阻塞，所以不再向标准输入发送数据时发送CTRL-D
+        # 模仿netcat从标准输入中读取数据，并通过网络发送数据
+        buffer = sys.stdin.read()
+
+        # send data
+        client_sender(buffer)
+
+    # 我们开始监听并准备上传文件、执行命令
+    # 放置一个反弹shell
+    # 取决于上面的命令行选项
+    if listen:
+        server_loop()
+
+
+def client_sender(buffer):
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    try:
+        # 连接到目标主机
+        client.connect((target, port))
+
+        if len(buffer):
+            client.send(buffer)
+
+        while True:
+            # 现在等待数据回传
+            recv_len = 1
+            response = ""
+
+            while recv_len:
+                data = client.recv(4096)
+                recv_len = len(data)
+                response += data
+
+                if recv_len < 4096:
+                    break
+            print(response)
+
+            # 等待更多的输入
+            buffer = input("")
+            buffer += "\n"
+
+            # 发送出去
+            client.send(buffer)
+
+    except:
+
+        print("[*]Exception! Exiting.")
+        # close connection
+        client.close()
+
+
+def server_loop():
+    global target
+
+    # 如果没有定义目标,那么我吗监听所有接口
+    if not len(target):
+        target = "0.0.0.0"
+
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind((target, port))
+
+    server.listen(5)    # 最大监听数
+
+    # while True:   # P18
 
 
 if __name__ == '__main__':
     useage()
+
 
 
 
