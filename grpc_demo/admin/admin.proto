@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package admin;
+
+message EventRequest {
+    string json_request = 1; 
+    int32 user_id = 2; //操作人
+}
+
+
+message EventResponse {
+    int32 code = 1;
+    string msg = 2;
+    int32 event_id = 3;
+}
+
+message Event{
+    int32 id = 1;
+}
+message EventData{
+    string json_response = 1;
+}
+
+message NULL{
+}
+
+message CityJSON{
+    string city = 1; 
+} 
+message TagJSON{
+    string tag = 1; 
+} 
+
+message URL{
+    string url = 1;
+}
+message Image{
+    int32 id = 1;
+    string url = 2;
+    string filename = 3;
+}
+
+service AdminHandler {
+  rpc insert_event (EventRequest) returns (EventResponse) {}
+  rpc display_event (Event) returns (EventData) {}
+  rpc get_all_province (NULL) returns (CityJSON) {}
+  rpc get_all_tag (NULL) returns (TagJSON) {}
+  rpc save_img (URL) returns (Image) {}
+}
