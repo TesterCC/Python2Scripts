@@ -16,6 +16,9 @@ python获取图片尺寸大小
 url = 'https://pic.huodongjia.com/event/2017-12-20/1513755021.78.jpg'
 
 file = urllib2.urlopen(url)
+print(file)
+print(type(file))
+
 tmp = cStringIO.StringIO(file.read())
 im = Image.open(tmp)
 
