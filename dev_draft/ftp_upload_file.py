@@ -6,10 +6,15 @@ __time__ = '18/4/19 22:28'
 import os
 from ftplib import FTP
 
+"""
+Connect to Ubuntu in Terminal: 
+ftp -P 2121 172.16.150.160
+"""
+
 
 def ftpconnect():
 
-    ftp_server = '172.16.150.255'
+    ftp_server = '172.16.150.160'
 
     ftp = FTP()
     ftp.set_debuglevel(2)  # 打开调试级别2，显示详细信息
@@ -29,14 +34,14 @@ def uploadfile(ftp, localpath, remotedir="/home/testftp"):
     fp.close()     # close file
 
 
-if __name__ == '__main__':
-    ftp = ftpconnect()
-    fp = os.popen("ls *.jpg")
-    lines = fp.readlines()
-    for line in lines:
-        print(line.strip())
-        uploadfile(ftp, line.strip())
-    fp.close()
+
+ftp = ftpconnect()
+fp = os.popen("ls *.jpg")
+lines = fp.readlines()
+for line in lines:
+    print(line.strip())
+    uploadfile(ftp, line.strip())
+fp.close()
 
 
 
