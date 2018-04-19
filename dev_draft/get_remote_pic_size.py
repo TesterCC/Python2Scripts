@@ -13,8 +13,9 @@ https://blog.csdn.net/pud_zha/article/details/8809878
 HTTP之Content-Length
 """
 
-url = 'https://pic.huodongjia.com/event/2017-12-20/1513755021.78.jpg'
+# url = 'https://pic.huodongjia.com/event/2017-12-20/1513755021.78.jpg'
 # url = 'https://pic.huodongjia.com/event/2018-02-23/1519357566.95.jpg'
+url ='http://lensbuyersguide.com/gallery/219/2/23_iso100_14mm.jpg'    # > 5M
 
 # 两种写法都可用
 # pre_img_size = requests.head(url).headers.get('content-length')   # content-length单位为字节
