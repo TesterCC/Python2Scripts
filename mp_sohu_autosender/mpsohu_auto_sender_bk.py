@@ -15,6 +15,7 @@ import re
 
 import requests
 from selenium import webdriver
+from bs4 import BeautifulSoup
 
 """
 需求：
@@ -29,7 +30,7 @@ class AutoSender(object):
     for auto send article
     """
 
-    def __init__(self, username="15281005385", password="your password"):
+    def __init__(self, username="15281005385", password=""):
 
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
@@ -91,7 +92,9 @@ class AutoSender(object):
         self.cat = cat
         self.session = requests.session()
         self.domain_url = domain_url
-        self.send_times = 2  # 设置每个账号的发帖数
+        # self.retry_num = 5
+        # self.i = 1  # it/page flag
+        self.send_times = 3  # 设置每个账号的发帖数
         self.interval_time = 60   # 单账户发帖间隔时间，单位秒
 
         self.channel_id = channel_id
@@ -102,7 +105,7 @@ class AutoSender(object):
         self.login_url = "https://mp.sohu.com/mpfe/v3/login"
         self.after_login_url = "https://mp.sohu.com/mpfe/v3/main/first/page"
         self.edit_article_url = "http://mp.sohu.com/v2/main/news/add.action"
-        # self.publish_direct_url = "https://mp.sohu.com/v3/news/publish"   # publish, just 5 !
+        # self.publish_direct_url = "https://mp.sohu.com/v3/news/publish"   # publish
         # self.post_draft_url = "https://mp.sohu.com/v3/news/draft"  # draft
         self.publish_direct_url = "https://mp.sohu.com/v3/news/draft"  # for debug, change publish url to draft url
 
@@ -167,7 +170,16 @@ class AutoSender(object):
 
         valid_link_list = self.check_valid_url(link_list)  # 进入逻辑取检查，返回一个不重复的link_list
 
-        # i = 0 单账号发贴初始值
+        # i = 0  # 单账号发贴初始值
+        # for valid_url in valid_link_list:
+        #     while i < self.send_times:
+        #         valid_json_url = valid_url + "?json=1"
+        #         self.publish_article(valid_json_url)
+        #         i += 1
+        #         print("Finish {0} article send".format(i))
+        #         sleep(10)
+        #     print(">>>>>>>>>>>>>>>已达发帖限制数{}".format(self.send_times))
+        #     break
         for i in range(len(valid_link_list) - 1):
             while i < self.send_times:
                 valid_json_url = valid_link_list[i] + "?json=1"
@@ -175,7 +187,7 @@ class AutoSender(object):
                 i += 1
                 print("Finish {0} article send".format(i))
                 sleep(self.interval_time)    # 初始化中可设置
-            print(">>>>>>>>>>>>>>>已达发帖限制数{}, 结束任务>>>>>>>>>>>>>>>".format(self.send_times))
+            print(">>>>>>>>>>>>>>>已达发帖限制数{}".format(self.send_times))
             break
 
     def publish_article(self, valid_url):
@@ -321,10 +333,12 @@ class AutoSender(object):
 
     def check_valid_url(self, link_list):
         """
-        check url is valid and don't published
+
         :param link_list:
-        :return: valid_url_links
+        :return: a valid list
         """
+        # TODO 读取log去重复
+        # TODO 分页爬取
 
         log_name = self.create_log()
 
@@ -351,6 +365,18 @@ class AutoSender(object):
             valid_target_url = self.domain_url + target_url + "?json=1"
             valid_url_links.append(valid_target_url)
 
+        ####
+        # for target_url in link_list:
+        #     while len(valid_url_links) < self.send_times:  # FIXME 大坑，如果valid_url_links < self.send_times, 会进入死循环, 目前解决方案，一次性读取足够多的link list, 分页遍历，先自定义一个范围.
+        #         if target_url in check_list:
+        #             print("{0} had published!!!".format(target_url))
+        #             link_list.remove(target_url)
+        #             print(link_list)
+        #             break
+        #         else:
+        #             valid_target_url = self.domain_url + target_url + "?json=1"
+        #             valid_url_links.append(valid_target_url)
+        ###
         return valid_url_links
 
     def get_event_url_from_cat_url(self):
@@ -385,8 +411,13 @@ class AutoSender(object):
         create xxx.log for different account
         :return:
         """
+
+        # print(os.getcwd())   # /Users/TesterCC/Development/python_workspace/Python_Network/mp_sohu_autosender
+        # print(sys.path[0])   # /Users/TesterCC/Development/python_workspace/Python_Network/mp_sohu_autosender
+
         cat = 'all' if self.cat == "business" else self.cat  # business 对应 all 分类
 
+        # file_name = os.getcwd() + '/' + cat + '.log'
         log_name = 'spider_' + cat + '.log'  # log_name format: spider_xx.log
         if os.path.exists(log_name):
             # print('文件{}已存在'.format(log_name))
@@ -406,7 +437,7 @@ if __name__ == '__main__':
     auto.send_article()
     auto.clear_account_cache()
 
-    # sleep(10)   # 建议不同账号间加上
+    sleep(10)   # 建议不同账号间加上
 
     auto = AutoSender(username='15281005385')
     auto.login_platform()
