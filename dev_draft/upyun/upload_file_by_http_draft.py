@@ -18,11 +18,17 @@ from requests.exceptions import Timeout
 import upyun
 
 
+"""
+https://note.youdao.com/web/#/file/WEBef88c0b328111992bc7fb37aa742c187/note/WEBea03e1d3f6e046bed3484906e9aa6c60/
+"""
 # non pic.huodongjia.com
 
-URLS = ['http://img2.ctoutiao.com/uploads/2018/04/17/1523956754511321.jpg', 'http://5b0988e595225.cdn.sohucs.com/images/20180416/fbf4c2cf4ae444da84731aa9e44bbef9.jpeg']
+# URLS = ['http://img2.ctoutiao.com/uploads/2018/04/17/1523956754511321.jpg', 'http://5b0988e595225.cdn.sohucs.com/images/20180416/fbf4c2cf4ae444da84731aa9e44bbef9.jpeg']
 
-TEXT = '<div style=\"padding: 0 10px\"><p>测试会议，请勿操作</p></div><p>就是这样测试1</p><p><img src=\"http://img2.ctoutiao.com/uploads/2018/04/17/1523956754511321.jpg"></p><p>就是这样测试2</p><p><img src=\"http://5b0988e595225.cdn.sohucs.com/images/20180416/fbf4c2cf4ae444da84731aa9e44bbef9.jpeg"></p>'
+# add weixin url
+URLS = ['https://5b0988e595225.cdn.sohucs.com/images/20180427/ae379b3710da41c9942b42408b6f6711.jpeg', 'https://mmbiz.qpic.cn/mmbiz_jpg/HbibPwLYpapUlgE5KBibhibA9tO7sZseIanFycyiaSJYp6q5m7jBu0KQEmiaIwbIV1EEv8MAZjClSHokgsaIgI6TVlw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1', 'https://mmbiz.qpic.cn/mmbiz_gif/EKs3bvt0w0KUOKiaqaib6ibkVurv1PcLpyRZQSiaX57OFnr6EHA16sT5ks3VNn2B7GfrgNGNg4xtKibVtEa26JUPtRA/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1', 'https://mmbiz.qpic.cn/mmbiz_png/EKs3bvt0w0KUOKiaqaib6ibkVurv1PcLpyRwYt7cuaj7byoK2muTYGvBribFgUxwWjwBiaDUY0N14wQmkjpt27ibzMyQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1']
+
+# TEXT = '<div style=\"padding: 0 10px\"><p>测试会议，请勿操作</p></div><p>就是这样测试1</p><p><img src=\"http://img2.ctoutiao.com/uploads/2018/04/17/1523956754511321.jpg"></p><p>就是这样测试2</p><p><img src=\"http://5b0988e595225.cdn.sohucs.com/images/20180416/fbf4c2cf4ae444da84731aa9e44bbef9.jpeg"></p>'
 
 IMAGE_DOMAIN = 'https://pic.huodongjia.com/'
 
@@ -32,8 +38,14 @@ def convert_outside_urls(urls):
 
     @rtype list:  返回活动家图片服务器  url list
     '''
-    pool = ThreadPool(2)
-    o = r'(http.+?\.jpg|http.+?\.png|http.+?\.bmp|http.+?\.gif|http.+?\.jpeg)'
+    pool = ThreadPool(4)
+    # o = r'(http.+?\.jpg|http.+?\.png|http.+?\.bmp|http.+?\.gif|http.+?\.jpeg)'   # normal one
+
+    # get weixin url, but need to deal with weixin image suffix
+    o = r'(http.+?\.jpg|http.+?\.png|http.+?\.bmp|http.+?\.gif|http.+?\.jpeg|https:\/\/mmbiz.qpic.cn\/mmbiz_(?:jpg|gif|png|jpeg)\/.+?\/)'
+
+    # o = r'(http.+?\.jpg|http.+?\.png|http.+?\.bmp|http.+?\.gif|http.+?\.jpeg|https:\/\/mmbiz.qpic.cn\/mmbiz_(?:jpg|gif|png|jpeg)\/.+?wx_fmt.+?&)'   # with wx_fmt=png
+
     print(urls)
     try:
         img_urls = [re.findall(o, u)[0] for u in urls]
@@ -53,7 +65,9 @@ def _convert_url(url):
     if not url.startswith(('http', 'https')):
         return ''
 
-    image = download_image_from_url(url)
+    # image = download_image_from_url(url)
+
+    image, image_type = download_image_from_url(url)   # return image_tye
 
     if image is None:
         return url
@@ -63,7 +77,7 @@ def _convert_url(url):
         t0 = time.time()
         print('costs begin............>>>>>>>>>>>>>>>>>>>>')
         # TODO insteaded by upload_file_by_http(url, image)
-        inner_url = upload_file_by_http(url, image)
+        inner_url = upload_file_by_http(image, image_type)
         print('costs {}'.format(time.time() - t0))
     except:
         logging.error(traceback.format_exc())
@@ -80,18 +94,29 @@ def download_image_from_url(url):
     try:
         start_time = time.time()
         # print('prepare fetch image URL........{}'.format(url))
-        image = requests.get(url, stream=True, timeout=5, verify=False)
-        image_size = int(image.headers['content-length'])/1024
-        if image_size > 1000:
-            print('image size > 1M, do not download')
+        image = requests.get(url, stream=True, timeout=7, verify=False)
+
+        # debug
+        # print("will download images type:")
+        image_type = image.headers['Content-Type'].split('/')[-1]
+        # print(image_type)
+        # print(type(image_type))
+        # print(image.headers['Content-Type'])
+        if image_type in ["png", "jpeg", "jpg", "gif", "bmp"]:
+            image_size = int(image.headers['content-length'])/1024
+            if image_size > 1000:
+                print('image size > 1M, do not download')
+                return None
+            print('finish fetch image URL........{}'.format(url))
+            print('fetch image cost time : {}'.format(time.time() - start_time))
+        else:
+            print('image_type is error, current type : {}'.format(image_type))
             return None
-        print('finish fetch image URL........{}'.format(url))
-        print('fetch image cost time : {}'.format(time.time() - start_time))
     except Timeout:
         logging.error('download outside url failed. caused by timeout')
         return None
     else:
-        return image.content      #  return unicode
+        return image.content, image_type      #  return unicode
 
 
 def multi_sub(replace_url_list, text):
@@ -110,11 +135,10 @@ def multi_sub(replace_url_list, text):
         text)
 
 
-def upload_file_by_http(file_name, file_obj, directory='test-event-content'):
+def upload_file_by_http(file_obj, image_type, directory='test-event-content'):
     '''
     use upyun sdk to upload file
     '''
-    file_name = file_name.split('?')[0]
 
     BUCKETNAME = ''
     USERNAME = ''
@@ -127,7 +151,13 @@ def upload_file_by_http(file_name, file_obj, directory='test-event-content'):
     sub_directory = datetime.date.strftime(datetime.date.today(),
                                            '%Y-%m-%d')
     server_directory = directory + '/' + sub_directory + '/'
-    _, suffix = os.path.splitext(file_name)
+
+    print("sub_directory: {}".format(sub_directory))
+
+    # _, suffix = os.path.splitext(file_name)
+    suffix = "." + image_type
+
+    # print("suffix is: {}".format(suffix))
 
     print("Server directory is {}".format(server_directory))
 
