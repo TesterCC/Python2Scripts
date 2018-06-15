@@ -31,7 +31,11 @@ PASSWORD = ''
 
 PIC_DOMAIN = 'https://pic.huodongjia.com'
 
+# target_url = 'http://img2.hudongba.com/upload/_oss/uePasteUpload/201806/1511/1529034655756.jpg'
 target_url = "http://img2.ctoutiao.com/uploads/2018/04/17/1523956754511321.jpg"
+
+# URLS = ['http://img2.hudongba.com/upload/_oss/uePasteUpload/201806/1511/1529034655756.jpg', 'http://img2.hudongba.com/upload/_oss/uePasteUpload/201806/1511/1529034655801.jpg']
+
 # target_url = "https://mmbiz.qpic.cn/mmbiz_jpg/EKs3bvt0w0KUOKiaqaib6ibkVurv1PcLpyR6StUYKLt5Lcm7bhyFJFuiaBXOWadGWBgaF84yTSIQF7b9NdmI6bxnnw/640?wx_fmt=jpeg&"
 # target_url = "https://mmbiz.qpic.cn/mmbiz_jpg/HbibPwLYpapUlgE5KBibhibA9tO7sZseIanFycyiaSJYp6q5m7jBu0KQEmiaIwbIV1EEv8MAZjClSHokgsaIgI6TVlw/640?wx_fmt=jpeg&"
 # target_url = "https://mmbiz.qpic.cn/mmbiz_gif/EKs3bvt0w0KUOKiaqaib6ibkVurv1PcLpyRZQSiaX57OFnr6EHA16sT5ks3VNn2B7GfrgNGNg4xtKibVtEa26JUPtRA/640?wx_fmt=gif&"

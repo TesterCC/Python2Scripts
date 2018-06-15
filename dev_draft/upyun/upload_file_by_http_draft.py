@@ -20,13 +20,18 @@ import upyun
 
 """
 https://note.youdao.com/web/#/file/WEBef88c0b328111992bc7fb37aa742c187/note/WEBea03e1d3f6e046bed3484906e9aa6c60/
+admin website图片调试专用
 """
 # non pic.huodongjia.com
 
 # URLS = ['http://img2.ctoutiao.com/uploads/2018/04/17/1523956754511321.jpg', 'http://5b0988e595225.cdn.sohucs.com/images/20180416/fbf4c2cf4ae444da84731aa9e44bbef9.jpeg']
 
 # add weixin url
-URLS = ['https://5b0988e595225.cdn.sohucs.com/images/20180427/ae379b3710da41c9942b42408b6f6711.jpeg', 'https://mmbiz.qpic.cn/mmbiz_jpg/HbibPwLYpapUlgE5KBibhibA9tO7sZseIanFycyiaSJYp6q5m7jBu0KQEmiaIwbIV1EEv8MAZjClSHokgsaIgI6TVlw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1', 'https://mmbiz.qpic.cn/mmbiz_gif/EKs3bvt0w0KUOKiaqaib6ibkVurv1PcLpyRZQSiaX57OFnr6EHA16sT5ks3VNn2B7GfrgNGNg4xtKibVtEa26JUPtRA/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1', 'https://mmbiz.qpic.cn/mmbiz_png/EKs3bvt0w0KUOKiaqaib6ibkVurv1PcLpyRwYt7cuaj7byoK2muTYGvBribFgUxwWjwBiaDUY0N14wQmkjpt27ibzMyQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1']
+#URLS = ['https://5b0988e595225.cdn.sohucs.com/images/20180427/ae379b3710da41c9942b42408b6f6711.jpeg', 'https://mmbiz.qpic.cn/mmbiz_jpg/HbibPwLYpapUlgE5KBibhibA9tO7sZseIanFycyiaSJYp6q5m7jBu0KQEmiaIwbIV1EEv8MAZjClSHokgsaIgI6TVlw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1', 'https://mmbiz.qpic.cn/mmbiz_gif/EKs3bvt0w0KUOKiaqaib6ibkVurv1PcLpyRZQSiaX57OFnr6EHA16sT5ks3VNn2B7GfrgNGNg4xtKibVtEa26JUPtRA/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1', 'https://mmbiz.qpic.cn/mmbiz_png/EKs3bvt0w0KUOKiaqaib6ibkVurv1PcLpyRwYt7cuaj7byoK2muTYGvBribFgUxwWjwBiaDUY0N14wQmkjpt27ibzMyQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1']
+
+# TODO
+URLS = ['http://img2.hudongba.com/upload/_oss/uePasteUpload/201806/1511/1529034655756.jpg', 'http://img2.hudongba.com/upload/_oss/uePasteUpload/201806/1511/1529034655801.jpg']
+
 
 # TEXT = '<div style=\"padding: 0 10px\"><p>测试会议，请勿操作</p></div><p>就是这样测试1</p><p><img src=\"http://img2.ctoutiao.com/uploads/2018/04/17/1523956754511321.jpg"></p><p>就是这样测试2</p><p><img src=\"http://5b0988e595225.cdn.sohucs.com/images/20180416/fbf4c2cf4ae444da84731aa9e44bbef9.jpeg"></p>'
 
@@ -102,7 +107,7 @@ def download_image_from_url(url):
         # print(image_type)
         # print(type(image_type))
         # print(image.headers['Content-Type'])
-        if image_type in ["png", "jpeg", "jpg", "gif", "bmp"]:
+        if image_type in ["png", "jpeg", "jpg", "gif", "bmp", "octet-stream", "webp"]:
             image_size = int(image.headers['content-length'])/1024
             if image_size > 1000:
                 print('image size > 1M, do not download')
@@ -143,6 +148,7 @@ def upload_file_by_http(file_obj, image_type, directory='test-event-content'):
     BUCKETNAME = ''
     USERNAME = ''
     PASSWORD = ''
+
 
     up = upyun.UpYun(BUCKETNAME, USERNAME, PASSWORD, timeout=30, endpoint=upyun.ED_AUTO)
 
