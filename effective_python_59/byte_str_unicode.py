@@ -5,7 +5,7 @@ __time__ = '18/7/2 09:05'
 
 """
 Effective Python编写高质量Python代码的59个有效方法  P6
-Python2  str(包含原始8位，等价Python3的bytes)
+Python2  str(包含原始8位，等价Python3的bytes)   -- 原始8位:由于每个字节有8个二进制位，故是原始的8位
 Python2  unicode(包含Unicode字符)
 
 Python2

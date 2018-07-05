@@ -9,3 +9,4 @@ build
 ghostdriver.log
 company_code/Douban_publish_tool/.vscode/
 company_code
+tmp/
