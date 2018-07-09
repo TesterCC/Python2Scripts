@@ -34,7 +34,7 @@ target = target_dir + now_time + '.tar.gz'
 print("target: {}".format(target))
 
 # compress to .tar.gz command
-#command = 'tar zcPf {0} {1}/debug.*'.format(target, ''.join(source))   # 绝对路径会打包多个文件
+#command = 'tar zcPf {0} {1}/debug.*'.format(target, ''.join(source))   # 绝对路径会打包多个文件夹
 
 command = 'tar zcPf {0} debug.*'.format(target, ''.join(source))
 print("Run command: \n{}".format(command))
