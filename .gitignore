@@ -10,3 +10,5 @@ ghostdriver.log
 company_code/Douban_publish_tool/.vscode/
 company_code
 tmp/
+backup_logs/
+*.log
