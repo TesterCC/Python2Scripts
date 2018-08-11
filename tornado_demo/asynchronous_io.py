@@ -12,3 +12,14 @@ __time__ = '18/8/10 14:21'
 
 异步I/O
 """
+
+from tornado.httpclient import AsyncHTTPClient
+
+
+def handle_response(response):
+    print(response.body)
+
+
+def asynchronous_visit():
+    http_client = AsyncHTTPClient()
+    http_client.fetch("www.baidu.com", callback=handle_response)
