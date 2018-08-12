@@ -22,7 +22,7 @@ def synchronous_visit():
     :return:
     """
     http_client = HTTPClient()
-    response = http_client.fetch("http://www.baidu.com")
+    response = http_client.fetch("http://xueshu.baidu.com")
     print(response.body)
 
 
