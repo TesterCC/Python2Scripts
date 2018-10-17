@@ -62,8 +62,8 @@ if __name__ == '__main__':
     # }
 
     kwargs = {
-        'to': ['1791935171@qq.com'],
-        'sub': u'活动家Python开发',
-        'content': u'<html><body>活动家test，全球最大的会议平台, 测试标签2</body></html>'
+        'to': ['xxxxx@qq.com'],
+        'sub': u'Python开发',
+        'content': u'<html><body>test，XX平台, 测试</body></html>'
     }
     print send_email_by_sendcloud(**kwargs)
