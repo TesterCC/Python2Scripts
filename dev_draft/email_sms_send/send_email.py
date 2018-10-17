@@ -18,15 +18,15 @@ def send_email_by_sendcloud(sub, content, to, from_email=None, from_name=None, t
     '''
     ret = {}
     url = "http://sendcloud.sohu.com/webapi/mail.send.json"
-    API_USER = 'huodongjia_41huiyi'
-    API_KEY = '7SvgNBKKVDvZwkJD'
+    API_USER = ''
+    API_KEY = ''
 
     # 配置各项参数
     params = {
         "api_user": API_USER,  # 使用api_user和api_key进行验证
         "api_key": API_KEY,
-        "from": from_email if from_email else 'hdj@41huiyi.com',  # 发信人, 用正确邮件地址替代
-        "fromname": from_name if from_name else u'活动家团队',  # 邮件来源
+        "from": from_email if from_email else 'test@test.com',  # 发信人, 用正确邮件地址替代
+        "fromname": from_name if from_name else u'xxx团队',  # 邮件来源
         "to": ';'.join(to),  # 收件人地址列表
         "subject": sub.encode('utf-8'),  # 主题
         "html": content.encode('utf-8'),  # 邮件内容
