@@ -16,7 +16,7 @@ Python 2 解答
 """
 
 import base64
-
+import random
 
 class Codec:
     db = dict()
@@ -27,7 +27,9 @@ class Codec:
         :type longUrl: str
         :rtype: str
         """
-        flag = base64.b64encode(longUrl)[::-1][:6]     # 这个解法一般
+        flag = base64.b64encode(longUrl)
+        flag = random.sample(flag, 6)
+        flag = "".join(flag)
         self.db[flag] = longUrl
         # print(self.db)    # {'aHR0cH': 'https://leetcode.com/problems/design-tinyurl'}
         return "https://tinyurl.com/{0}".format(flag)
@@ -45,8 +47,7 @@ class Codec:
 if __name__ == '__main__':
 
 # Your Codec object will be instantiated and called as such:
-#     url = "https://leetcode.com/problems/design-tinyurl"
-    url = "http://badge.example.net/beginner.aspx?aftermath=achiever&actor=air"
+    url = "http://www.example.net/?appliance=brass&approval=border#ball"
     codec = Codec()
     print(codec.encode(url))
     print(codec.decode(codec.encode(url)))
